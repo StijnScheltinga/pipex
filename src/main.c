@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:12:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/02/28 18:20:09 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/03/06 14:48:43 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,9 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	atexit(leaks);
-	if (parse_input(argc, argv, &pipex) == 1)
-		return (1);
 	pipex.envp = envp;
-	get_paths(envp, &pipex);
-	printf("%s\n%s\n", pipex.cmd1[0], pipex.cmd1[1]); 
-	if (create_process(&pipex) == 1)
-		return (1);
+	atexit(leaks);
+	parse_input(argc, argv, &pipex);
+	create_process(&pipex);
 	return (0);
 }
