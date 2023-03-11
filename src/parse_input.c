@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:46:41 by sschelti          #+#    #+#             */
-/*   Updated: 2023/03/06 13:53:17 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:24:15 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	parse_input(int argc, char **argv, t_pipex *pipex)
 	pipex->fd2 = open(argv[4], O_WRONLY);
 	if (pipex->fd1 < 0 || pipex->fd2 < 0)
 		exit(EXIT_FAILURE);
-	printf("%d\n%d\n", pipex->fd1, pipex->fd2);
 	get_paths(pipex);
 }
 

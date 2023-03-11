@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:50:36 by sschelti          #+#    #+#             */
-/*   Updated: 2023/03/06 13:24:49 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:22:28 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
+
+# define READ_END 0
+# define WRITE_END 1
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -34,7 +37,8 @@ typedef struct s_pipex{
 void	parse_input(int argc, char **argv, t_pipex *pipex);
 void	get_paths(t_pipex *pipex);
 void	create_process(t_pipex *pipex);
-void	child_process(t_pipex *pipex);
-void	parent_process(t_pipex *pipex);
+void	child_process(t_pipex *pipex, int *fd);
+void	parent_process(t_pipex *pipex, int *fd);
+void	execute_command(char **paths, char **cmd);
 
 #endif
