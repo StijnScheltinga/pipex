@@ -6,15 +6,14 @@
 /*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:46:41 by sschelti          #+#    #+#             */
-/*   Updated: 2023/03/10 16:24:15 by stijn            ###   ########.fr       */
+/*   Updated: 2023/03/13 14:11:06 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-void	parse_input(int argc, char **argv, t_pipex *pipex)
+void	parse_input(char **argv, t_pipex *pipex)
 {
-	argc = 0;
 	pipex->cmd1 = ft_split(argv[2], ' ');
 	pipex->cmd2 = ft_split(argv[3], ' ');
 	pipex->fd1 = open(argv[1], O_RDONLY);

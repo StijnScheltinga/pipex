@@ -6,7 +6,7 @@
 /*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:51:01 by sschelti          #+#    #+#             */
-/*   Updated: 2023/03/11 18:28:46 by stijn            ###   ########.fr       */
+/*   Updated: 2023/03/14 21:04:12 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	child_process(t_pipex *pipex, int *fd)
 	dup2(fd[WRITE_END], STDOUT_FILENO);
 	dup2(pipex->fd1, STDIN_FILENO);
 	execute_command(pipex->paths, pipex->cmd1);
-	
+	close(fd[WRITE_END]);	
 }
 
 void	parent_process(t_pipex *pipex, int *fd)
@@ -47,6 +47,7 @@ void	parent_process(t_pipex *pipex, int *fd)
 	dup2(fd[READ_END], STDIN_FILENO);
 	dup2(pipex->fd2, STDOUT_FILENO);
 	execute_command(pipex->paths, pipex->cmd2);
+	close(fd[READ_END]);
 }
 
 void	execute_command(char **paths, char **cmd)
@@ -69,6 +70,4 @@ void	execute_command(char **paths, char **cmd)
 		perror("execve");
 		exit(EXIT_FAILURE);
 	}
-	else
-		exit (EXIT_SUCCESS);
 }

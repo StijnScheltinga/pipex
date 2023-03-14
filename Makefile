@@ -16,7 +16,7 @@ $(NAME): $(OBJECTS)	$(LIBS)
 	$(CC) $(flags) -o $(NAME) $(LIBS) $(OBJECTS)
 
 $(BUILD)/%.o: $(SRC_DIR)/%.c | $(BUILD)
-	gcc $(FLAGS) $(INCLUDE) -c $< -o $@
+	gcc -g $(FLAGS) $(INCLUDE) -c $< -o $@
 
 $(BUILD):
 	@mkdir -p $(BUILD)

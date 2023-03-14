@@ -6,7 +6,7 @@
 /*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:50:36 by sschelti          #+#    #+#             */
-/*   Updated: 2023/03/10 16:22:28 by stijn            ###   ########.fr       */
+/*   Updated: 2023/03/13 14:10:03 by stijn            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_pipex{
 	int		fd2;
 }	t_pipex;
 
-void	parse_input(int argc, char **argv, t_pipex *pipex);
+void	parse_input(char **argv, t_pipex *pipex);
 void	get_paths(t_pipex *pipex);
 void	create_process(t_pipex *pipex);
 void	child_process(t_pipex *pipex, int *fd);
