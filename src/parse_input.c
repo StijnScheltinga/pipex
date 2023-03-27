@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:46:41 by sschelti          #+#    #+#             */
-/*   Updated: 2023/03/13 14:11:06 by stijn            ###   ########.fr       */
+/*   Updated: 2023/03/27 12:37:46 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
+
+// void	invalid_input(int argc, char **argv)
+// {
+
+// }
 
 void	parse_input(char **argv, t_pipex *pipex)
 {

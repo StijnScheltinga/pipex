@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stijn <stijn@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:12:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/03/14 16:16:31 by stijn            ###   ########.fr       */
+/*   Updated: 2023/03/27 12:42:11 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
+
+void	leaks(void)
+{
+	system("leaks pipex");
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -18,9 +23,9 @@ int	main(int argc, char **argv, char **envp)
 
 	pipex.envp = envp;
 	argc = argc + 1;
+	atexit(leaks);
+	// invalid_input(argc, argv);
 	parse_input(argv, &pipex);
 	create_process(&pipex);
-	dup2(1, STDOUT_FILENO);
-	printf("jo");
 	return (0);
 }
