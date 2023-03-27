@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:12:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/03/27 12:42:11 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/03/27 17:49:42 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	leaks(void)
 {
-	system("leaks pipex");
+	system("leaks -s pipex");
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -22,9 +22,9 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex	pipex;
 
 	pipex.envp = envp;
-	argc = argc + 1;
 	atexit(leaks);
-	// invalid_input(argc, argv);
+	if (invalid_input(argc, argv) == 1)
+		exit(EXIT_FAILURE);
 	parse_input(argv, &pipex);
 	create_process(&pipex);
 	return (0);
