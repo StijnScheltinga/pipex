@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:51:01 by sschelti          #+#    #+#             */
-/*   Updated: 2023/03/27 18:19:49 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/03/28 18:26:37 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,66 +18,46 @@ void	create_process(t_pipex *pipex)
 	int		fd[2];
 
 	if (pipe(fd) < 0)
-	{
-		perror("pipe error");
-		exit(EXIT_FAILURE);
-	}
+		error_func("pipe");
 	pid = fork();
 	if (pid < 0)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
+		error_func("fork");
 	else if (pid == 0)
 		child_process(pipex, fd);
 	else if (pid > 0)
-		parent_process(pipex, fd, pid);
+		parent_process(pipex, fd);
 }
 
 void	child_process(t_pipex *pipex, int *fd)
 {
 	close(fd[READ_END]);
 	if (dup2(fd[WRITE_END], STDOUT_FILENO) == -1)
-	{
-		perror("dup2 failed");
-		exit(EXIT_FAILURE);
-	}
+		error_func("dup2");
 	if (dup2(pipex->fd1, STDIN_FILENO) == -1)
-	{
-		perror("dup2 failed");
-		exit(EXIT_FAILURE);
-	}
+		error_func("dup2");
 	execute_command(pipex->paths, pipex->cmd1);
 	close(fd[WRITE_END]);
-	exit(EXIT_SUCCESS);
+	exit(EXIT_FAILURE);
 }
 
-void	parent_process(t_pipex *pipex, int *fd, pid_t pid)
+void	parent_process(t_pipex *pipex, int *fd)
 {
 	int		status;
 	pid_t	child_process;
 
 	status = 0;
-	child_process = waitpid(pid, &status, 0);
+	child_process = wait(&status);
 	if (child_process == -1)
-	{
-		perror("wait");
-		exit(EXIT_FAILURE);
-	}
+		error_func("wait");
 	close(fd[WRITE_END]);
 	if (dup2(fd[READ_END], STDIN_FILENO) == -1)
-	{
-		perror("dup2 failed");
-		exit(EXIT_FAILURE);
-	}
+		error_func("dup2");
+	printf("fd2: %d\n", pipex->fd2);
 	if (dup2(pipex->fd2, STDOUT_FILENO) == -1)
-	{
-		perror("dup2 failed");
-		exit(EXIT_FAILURE);
-	}
+		error_func("dup2");
 	execute_command(pipex->paths, pipex->cmd2);
 	close(fd[READ_END]);
-	exit(EXIT_SUCCESS);
+	exit(EXIT_FAILURE);
 }
 
 void	execute_command(char **paths, char **cmd)
@@ -96,8 +76,5 @@ void	execute_command(char **paths, char **cmd)
 		i++;
 	}
 	if (execve(path_cmd, cmd, NULL) == -1)
-	{
-		perror("execve");
-		exit(EXIT_FAILURE);
-	}
+		error_func("execve");
 }
