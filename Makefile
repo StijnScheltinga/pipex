@@ -1,4 +1,4 @@
-SOURCES	=		main.c parse_input.c create_process.c
+SOURCES	=		main.c parse_input.c create_process.c utils.c
 SRC_DIR	=		src
 BUILD	=		build
 OBJECTS	=		$(addprefix $(BUILD)/, $(SOURCES:.c=.o))

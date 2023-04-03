@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:51:01 by sschelti          #+#    #+#             */
-/*   Updated: 2023/03/28 18:26:37 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/04/03 17:05:41 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,23 @@ void	create_process(t_pipex *pipex)
 		parent_process(pipex, fd);
 }
 
+void	print_func(t_pipex *pipex)
+{
+	printf("%s, %s, %s.\n", pipex->cmd1[0], pipex->cmd1[1], pipex->cmd1[2]);
+	printf("%s, %s, %s.\n", pipex->cmd2[0], pipex->cmd2[1], pipex->cmd2[2]);
+	printf("%s, %s, %s.\n", pipex->paths[0], pipex->paths[1], pipex->paths[2]);
+}
+
 void	child_process(t_pipex *pipex, int *fd)
 {
+	if (pipex->fd1 < 0)
+		exit(errno);
 	close(fd[READ_END]);
 	if (dup2(fd[WRITE_END], STDOUT_FILENO) == -1)
-		error_func("dup2");
+		error_func("dup2,1");
 	if (dup2(pipex->fd1, STDIN_FILENO) == -1)
-		error_func("dup2");
-	execute_command(pipex->paths, pipex->cmd1);
+		error_func("dup2,2");
+	execute_command(pipex->paths, pipex->cmd1, pipex);
 	close(fd[WRITE_END]);
 	exit(EXIT_FAILURE);
 }
@@ -51,16 +60,15 @@ void	parent_process(t_pipex *pipex, int *fd)
 		error_func("wait");
 	close(fd[WRITE_END]);
 	if (dup2(fd[READ_END], STDIN_FILENO) == -1)
-		error_func("dup2");
-	printf("fd2: %d\n", pipex->fd2);
+		error_func("dup2,3");
 	if (dup2(pipex->fd2, STDOUT_FILENO) == -1)
-		error_func("dup2");
-	execute_command(pipex->paths, pipex->cmd2);
+		error_func("dup2,4");
+	execute_command(pipex->paths, pipex->cmd2, pipex);
 	close(fd[READ_END]);
 	exit(EXIT_FAILURE);
 }
 
-void	execute_command(char **paths, char **cmd)
+void	execute_command(char **paths, char **cmd, t_pipex *pipex)
 {
 	int		i;
 	char	*path_cmd;
@@ -72,9 +80,10 @@ void	execute_command(char **paths, char **cmd)
 		if (!path_cmd)
 			exit(EXIT_FAILURE);
 		if (access(path_cmd, X_OK) == 0)
-			break ;
+		{
+			if (execve(path_cmd, cmd, pipex->envp) == -1)
+				error_func("execve");
+		}
 		i++;
 	}
-	if (execve(path_cmd, cmd, NULL) == -1)
-		error_func("execve");
 }

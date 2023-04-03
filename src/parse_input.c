@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:46:41 by sschelti          #+#    #+#             */
-/*   Updated: 2023/03/28 18:23:39 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:22:36 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,24 @@ void	parse_input(char **argv, t_pipex *pipex)
 		exit(EXIT_FAILURE);
 	pipex->fd1 = open(argv[1], O_RDONLY);
 	if (pipex->fd1 < 0)
-		error_func("incorrect input file");
-	pipex->fd2 = open(argv[4], O_CREAT | O_TRUNC | O_WRONLY);
+		perror ("infile");
+	pipex->fd2 = open(argv[4], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (pipex->fd2 < 0)
-		error_func("incorrect output file");
+		error_func("outfile");
+	if (access(argv[4], W_OK) < 0 || access(argv[4], R_OK) < 0)
+		error_func("outfile");
 }
 
-void	get_paths(t_pipex *pipex)
+void	get_paths(t_pipex *pipex, char **envp)
 {
 	int		i;
 
 	i = 0;
-	while (pipex->envp[i])
+	while (envp[i])
 	{
-		if (ft_strnstr(pipex->envp[i], "PATH=", 5))
+		if (ft_strnstr(envp[i], "PATH=", 5))
 		{
-			pipex->paths = ft_split((pipex->envp[i] + 5), ':');
+			pipex->paths = ft_split((envp[i] + 5), ':');
 			if (!pipex->paths)
 				exit(EXIT_FAILURE);
 		}
@@ -51,10 +53,24 @@ void	get_paths(t_pipex *pipex)
 			exit(EXIT_FAILURE);
 		i++;
 	}
+	// free_func(pipex->paths);
+	// free_func(pipex->cmd1);
+	// free_func(pipex->cmd2);
 }
 
-void	error_func(char *str)
+void	check_command(t_pipex *pipex, char **cmd)
 {
-	perror(str);
-	exit(EXIT_FAILURE);
+	char	*path_command;
+	int		i;
+
+	i = 0;
+	while (pipex->paths[i])
+	{
+		path_command = ft_strjoin(pipex->paths[i], cmd[0]);
+		if (access(path_command, F_OK) == 0)
+			break ;
+		i++;
+	}
+	if (access(path_command, F_OK) == -1)
+		error_func("error");
 }

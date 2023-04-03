@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 11:12:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/04/03 18:22:14 by sschelti         ###   ########.fr       */
+/*   Created: 2023/04/03 13:08:57 by sschelti          #+#    #+#             */
+/*   Updated: 2023/04/03 16:03:18 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/pipex.h"
 
-void	leaks(void)
+void	free_func(char **arr)
 {
-	system("leaks -s pipex");
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		printf("allocated: %s\n", arr[i]);
+		free (arr[i]);
+		i++;
+	}
+	free (arr);
+	printf("free: %s\n", arr[5]);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	error_func(char *str)
 {
-	t_pipex	pipex;
-
-	// atexit(leaks);
-	pipex.envp = envp;
-	if (argc != 5)
-	{
-		write(1, "incorrect amount of argmuments\n", 30);
-		return (1);
-	}
-	parse_input(argv, &pipex);
-	get_paths(&pipex, envp);
-	check_command(&pipex, pipex.cmd1);
-	check_command(&pipex, pipex.cmd2);
-	// create_process(&pipex);
-	return (0);
+	perror(str);
+	exit(errno);
 }
