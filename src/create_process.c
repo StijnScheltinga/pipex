@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:51:01 by sschelti          #+#    #+#             */
-/*   Updated: 2023/04/04 15:20:29 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/04/04 15:55:59 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	execute_command(char **paths, char **cmd, t_pipex *pipex)
 		path_cmd = ft_strjoin(paths[i], cmd[0]);
 		if (!path_cmd)
 			exit(EXIT_FAILURE);
-		if (access(path_cmd, X_OK) == 0)
+		if (access(path_cmd, F_OK) == 0)
 		{
 			if (execve(path_cmd, cmd, pipex->envp) == -1)
 				error_func("error");
