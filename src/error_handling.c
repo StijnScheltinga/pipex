@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:36:16 by sschelti          #+#    #+#             */
-/*   Updated: 2023/04/04 15:16:08 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/04/14 16:45:38 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	command_check(char **paths, char **cmd)
 	while (paths[i])
 	{
 		path_cmd = ft_strjoin(paths[i], cmd[0]);
+		if (!path_cmd)
+			error_message("Malloc failed");
 		if (access(path_cmd, X_OK | F_OK) == 0)
 		{
 			free (path_cmd);

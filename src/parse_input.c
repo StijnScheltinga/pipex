@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:46:41 by sschelti          #+#    #+#             */
-/*   Updated: 2023/04/14 15:58:32 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/04/14 16:58:55 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	parse_input(char **argv, t_pipex *pipex)
 void	get_paths(t_pipex *pipex, char **envp)
 {
 	int		i;
-	char	*temp;
 
 	i = 0;
 	while (envp[i])
@@ -46,6 +45,14 @@ void	get_paths(t_pipex *pipex, char **envp)
 		}
 		i++;
 	}
+	append_slash(pipex);
+}
+
+void	append_slash(t_pipex *pipex)
+{
+	int		i;
+	char	*temp;
+
 	i = 0;
 	while (pipex->paths[i])
 	{
@@ -54,6 +61,8 @@ void	get_paths(t_pipex *pipex, char **envp)
 			error_message("Malloc fail");
 		free (pipex->paths[i]);
 		pipex->paths[i] = ft_strdup(temp);
+		if (!pipex->paths[i])
+			error_message("Malloc fail");
 		free (temp);
 		i++;
 	}

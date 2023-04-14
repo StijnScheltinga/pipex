@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:50:36 by sschelti          #+#    #+#             */
-/*   Updated: 2023/04/04 14:08:42 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/04/14 16:58:35 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void	print_func(t_pipex *pipex);
 void	free_func(char **arr);
 void	free_all(t_pipex *pipex);
 void	error_message(char *str);
+void	append_slash(t_pipex *pipex);
 
 #endif
