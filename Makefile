@@ -3,7 +3,7 @@ SRC_DIR	=		src
 BUILD	=		build
 OBJECTS	=		$(addprefix $(BUILD)/, $(SOURCES:.c=.o))
 NAME	=		pipex	
-FLAGS	=		
+FLAGS	=		-Wall -Werror -Wextra
 CC		=		gcc
 
 LIBS	=		lib/libft/libft.a

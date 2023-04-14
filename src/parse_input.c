@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:46:41 by sschelti          #+#    #+#             */
-/*   Updated: 2023/04/04 12:41:54 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/04/14 15:58:32 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	parse_input(char **argv, t_pipex *pipex)
 {
-	pipex->cmd1 = ft_split(argv[2], ' ');
+	pipex->cmd1 = ft_split_pipex(argv[2], ' ');
 	if (pipex->cmd1 == NULL)
 		error_message("Malloc fail");
-	pipex->cmd2 = ft_split(argv[3], ' ');
+	pipex->cmd2 = ft_split_pipex(argv[3], ' ');
 	if (pipex->cmd2 == NULL)
 		error_message("Malloc fail");
 	pipex->fd1 = open(argv[1], O_RDONLY);
