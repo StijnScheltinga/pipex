@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:51:01 by sschelti          #+#    #+#             */
-/*   Updated: 2023/04/14 16:46:49 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/04/17 16:09:27 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,6 @@ void	child_process(t_pipex *pipex, int *fd)
 
 void	parent_process(t_pipex *pipex, int *fd)
 {
-	int		status;
-	pid_t	child_process;
-
-	status = 0;
-	child_process = wait(&status);
-	if (child_process == -1)
-		error_func("wait");
 	close(fd[WRITE_END]);
 	if (dup2(fd[READ_END], STDIN_FILENO) == -1)
 		error_func("dup2");

@@ -6,7 +6,7 @@
 /*   By: sschelti <sschelti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:12:50 by sschelti          #+#    #+#             */
-/*   Updated: 2023/04/14 13:08:25 by sschelti         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:53:23 by sschelti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@ int	main(int argc, char **argv, char **envp)
 	get_paths(&pipex, envp);
 	double_command_check(&pipex);
 	create_process(&pipex);
-	free_all(&pipex);
 	return (0);
 }
